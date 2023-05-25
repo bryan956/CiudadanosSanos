@@ -1,3 +1,6 @@
+using CiudadanosSanos.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace CiudadanosSanos
 {
     public class Program
@@ -9,7 +12,12 @@ namespace CiudadanosSanos
             // Add services to the container.
             builder.Services.AddRazorPages();
 
+            builder.Services.AddDbContext<Consulta_ExternaContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("CiudadanosSanosDb"))
+            );
+
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
