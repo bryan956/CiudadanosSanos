@@ -3,7 +3,7 @@ using CiudadanosSanos.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CiudadanosSanos.Pages.PayModes
+namespace CiudadanosSanos.Pages.Hospitalizacions
 {
     public class CreateModel : PageModel
     {

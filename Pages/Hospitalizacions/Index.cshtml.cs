@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace CiudadanosSanos.Pages.PayModes
+namespace CiudadanosSanos.Pages.Hospitalizacions
 {
     [Authorize]
     public class IndexModel : PageModel

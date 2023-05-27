@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace CiudadanosSanos.Pages.PayModes
+namespace CiudadanosSanos.Pages.Hospitalizacions
 {
-    public class DeleteModel : PageModel
+    public class EditsModel : PageModel
     {
-        public readonly ConsultaContext _context;
+        private readonly ConsultaContext _context;
 
-        public DeleteModel(ConsultaContext context)
+        public EditsModel(ConsultaContext context)
         {
             _context = context;
         }
@@ -26,35 +26,45 @@ namespace CiudadanosSanos.Pages.PayModes
             }
 
             var paymode = await _context.Hospitalizacions.FirstOrDefaultAsync(m => m.Id == id);
-
             if (paymode == null)
             {
                 return NotFound();
             }
-            else
-            {
-                Hospitalizacion = paymode;
-            }
+            Hospitalizacion = paymode;
             return Page();
         }
-
-
-
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync()
         {
-            if (id == null || _context.Hospitalizacions == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return Page();
             }
-            var paymode = await _context.Hospitalizacions.FindAsync(id);
 
-            if (paymode != null)
+            _context.Attach(Hospitalizacion).State = EntityState.Modified;
+
+            try
             {
-                Hospitalizacion = paymode;
-                _context.Hospitalizacions.Remove(paymode);
                 await _context.SaveChangesAsync();
             }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PayModeExists(Hospitalizacion.Id))
+                {
+                    return Page();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
             return RedirectToPage("./Index");
         }
+
+        private bool PayModeExists(int id)
+        {
+            return (_context.Hospitalizacions?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
     }
 }
