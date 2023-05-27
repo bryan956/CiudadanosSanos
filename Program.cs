@@ -9,14 +9,16 @@ namespace CiudadanosSanos
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddRazorPages();
-
             builder.Services.AddAuthentication().AddCookie("MyCookieAuth", options =>
             {
                 options.Cookie.Name = "MyCookieAuth";
                 options.LoginPath = "/Account/Loginn";
             });
+
+            // Add services to the container.
+            builder.Services.AddRazorPages();
+
+            
 
             builder.Services.AddDbContext<ConsultaContext>(options =>
              options.UseSqlServer(builder.Configuration.GetConnectionString("SupermarketDB"))
