@@ -12,9 +12,9 @@ namespace CiudadanosSanos
             // Add services to the container.
             builder.Services.AddRazorPages();
 
-            builder.Services.AddDbContext<Consulta_ExternaContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("CiudadanosSanosDb"))
-            );
+            builder.Services.AddDbContext<ConsultaContext>(options =>
+             options.UseSqlServer(builder.Configuration.GetConnectionString("SupermarketDB"))
+             );
 
             var app = builder.Build();
 
